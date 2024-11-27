@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class GameOverManager : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class GameOverManager : MonoBehaviour
     [SerializeField] private TMP_Text errorMessageText;
     [SerializeField] private TMP_Text finalScoreText;
 
-    /*[Header("Error Message Settings")]
-    [SerializeField] private float errorMessageDuration = 1f;*/
+    [Header("Error Message Settings")]
+    [SerializeField] private float errorMessageDuration = 1f;
 
     public void UpdateFinalScore()
     {
@@ -51,7 +52,14 @@ public class GameOverManager : MonoBehaviour
     {
         errorMessageText.text = message;
         errorMessageText.gameObject.SetActive(true);
+        StartCoroutine(nameof(HideErrorMessage));
        
+    }
+
+    private IEnumerator HideErrorMessage()
+    {
+        yield return new WaitForSecondsRealtime(errorMessageDuration);
+        errorMessageText.gameObject.SetActive(false);
     }
 
 }

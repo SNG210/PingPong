@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) && UiPanelManager.Instance.GetCurrentActivePanel() == "Game")
         {
             TogglePauseMenu();
         }

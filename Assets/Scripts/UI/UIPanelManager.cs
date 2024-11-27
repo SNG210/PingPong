@@ -2,6 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class UiPanelManager : MonoBehaviour
 {
     public static UiPanelManager Instance;
@@ -9,14 +13,16 @@ public class UiPanelManager : MonoBehaviour
     [System.Serializable]
     public struct Panel
     {
-        public string name;        
+        public string name;
         public GameObject panel;
-        public UnityEvent onActivate; 
-        public bool unlockCursor;     
+        public UnityEvent onActivate;
+        public bool unlockCursor;
     }
 
     [Header("Panels Configuration")]
     [SerializeField] private List<Panel> panels = new List<Panel>();
+
+    private string currentActivePanelName;
 
     private void Awake()
     {
@@ -47,8 +53,9 @@ public class UiPanelManager : MonoBehaviour
                 if (panel.name == panelName)
                 {
                     panel.panel.SetActive(true);
-                    InvokePanelEvent(panel); 
-                    SetCursorState(panel.unlockCursor); 
+                    currentActivePanelName = panel.name;
+                    InvokePanelEvent(panel);
+                    SetCursorState(panel.unlockCursor);
                     panelFound = true;
                 }
                 else
@@ -73,6 +80,8 @@ public class UiPanelManager : MonoBehaviour
                 panel.panel.SetActive(false);
             }
         }
+
+        currentActivePanelName = null;
     }
 
     private void InvokePanelEvent(Panel panel)
@@ -86,10 +95,20 @@ public class UiPanelManager : MonoBehaviour
         Cursor.visible = unlockCursor;
     }
 
+    public string GetCurrentActivePanel()
+    {
+        return currentActivePanelName;
+    }
 
     public void Quit()
     {
+#if UNITY_EDITOR
+        if (EditorApplication.isPlaying)
+        {
+            EditorApplication.isPlaying = false;
+        }
+#else
         Application.Quit();
+#endif
     }
-
 }

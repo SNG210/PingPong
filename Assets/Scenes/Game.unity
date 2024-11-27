@@ -4174,6 +4174,7 @@ MonoBehaviour:
   submitButton: {fileID: 1964428364}
   errorMessageText: {fileID: 1658153026}
   finalScoreText: {fileID: 492122169}
+  errorMessageDuration: 1
 --- !u!114 &1105436206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4244,7 +4245,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1105436205}
           m_TargetAssemblyTypeName: GameOverManager, Assembly-CSharp
-          m_MethodName: Scorr
+          m_MethodName: UpdateFinalScore
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4273,7 +4274,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     unlockCursor: 1
-  - name: Pause
+  - name: 
     panel: {fileID: 1882804139}
     onActivate:
       m_PersistentCalls:
